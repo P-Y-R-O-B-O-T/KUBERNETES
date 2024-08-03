@@ -256,8 +256,7 @@ spec:
 * These are objects that listen on a port and then forward to another port and address
 * It is like a virtual server insode the node
 ```mermaid
-block-beta
-columns 1
+graph LR
   user space node_port_service space pods
   user-->node_port_service
   node_port_service-->pods
