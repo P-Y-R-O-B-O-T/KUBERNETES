@@ -257,13 +257,13 @@ spec:
 * It is like a virtual server insode the node
 ```mermaid
 block-beta
-  user space service space pods
-  user-->service
-  service-->pods
+  user space node_port_service space pods
+  user-->node_port_service
+  node_port_service-->pods
   space
-  app_service1 space service space app_service2
-  app_service1-->service
-  service-->app_service2
+  app_service1 space ClusterIP_service space app_service2
+  app_service1-->ClusterIP_service
+  ClusterIP_service-->app_service2
 ```
 * **Types of Services**
     - `NodePort`: Makes an internal pod accessable on node
