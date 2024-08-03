@@ -265,7 +265,7 @@ block-beta
 block-beta
   app_service1 space service space app_service2
   app_service1-->service
-  service->>app_service2
+  service-->app_service2
 ```
 * **Types of Services**
     - `NodePort`: Makes an internal pod accessable on node
