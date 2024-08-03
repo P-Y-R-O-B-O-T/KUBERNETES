@@ -260,6 +260,7 @@ block-beta
   user space service space pods
   user-->service
   service-->pods
+  space
   app_service1 space service space app_service2
   app_service1-->service
   service-->app_service2
