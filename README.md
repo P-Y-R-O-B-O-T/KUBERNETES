@@ -261,6 +261,7 @@ block-beta
   user-->node_port_service
   node_port_service-->pods
   space
+  end
   app_service1 space ClusterIP_service space app_service2
   app_service1-->ClusterIP_service
   ClusterIP_service-->app_service2
