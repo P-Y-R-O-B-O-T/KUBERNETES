@@ -317,4 +317,3 @@ spec:
 > * Use native load balancers from cloud platforms
 > * Use external load balancer
 
-## MICROSERVICES ARCHITECTURE
