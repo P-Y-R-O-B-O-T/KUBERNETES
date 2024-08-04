@@ -316,4 +316,3 @@ spec:
 > * Balance load between the pods
 > * Use native load balancers from cloud platforms
 > * Use external load balancer
-
