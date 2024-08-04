@@ -69,8 +69,11 @@
 | `kubectl get POD_NAME` | Get state of pod |
 | `kubectl get pods --no-headers -o custom-columns=":metadata.name"` | Get all pods name only |
 | `kubectl get deployments` | See deployments |
+| `kubectl get services` | See services |
 | `kubectl describe pod POD_NAME` | Get more info about a pod, including the pod events |
 | `kubectl describe replicaset REPLICASET_NAME` | Get more info for replicaset |
+| `kubectl describe deployment DEPLOYMENT_NAME` | Get more info about deployment |
+| `kubectl describe service SERVICE_NAME` | Get info regarding service |
 | `kubectl create -f DEFINATION_FILE --record` | Create kubernetes object (pod, service, replica set, deployment) |
 | `kubectl delete pod POD_NAME` | Delete a pod |
 | `kubectl delete replicaset REPLICASET_NAME` | Delete replicaset and underlying pods |
@@ -82,6 +85,7 @@
 | `kubectl edit replicaset REPLICASET_NAME` | Change the actual config file of a replicaset which is inside the kubernetes framework |
 | `kubectl edit deployment DEPLOYMENT_NAME` | Change the actual config file of a deployment which is insode the kubernetes framework |
 | `kubectl apply -f DEFINATION_FILE --record` | Apply changes to a resource after changing its defination file |
+| `minikube service SERVICE_NAME --url` | Get url to access the service |
 
 > [!TIP]
 > * While runngin `kubectl get pods` the `N/N` in `READY` state shows `Containers running/Pods running`
@@ -254,8 +258,63 @@ spec:
 * Enable communication between various components inside and outside of application
 * Enables connect applications with other applications and users
 * These are objects that listen on a port and then forward to another port and address
-* It is like a virtual server insode the node
+* Service is like a virtual server inside the node, inside the cluster it has its own IP address and that is called `ClusterIP` of the service
 * **Types of Services**
     - `NodePort`: Makes an internal pod accessable on node
     - `ClusterIP`: Service creates a virtual IP insode the cluster to enable communication between different application services
-    - `LoadBalancer`:
+    - `LoadBalancer`: Balances load between different pods
+
+> [!IMPORTANT]
+> ### NODEPORT
+> * Port on the pod that runs an app_service is called `targetPort`
+> * Port on the service itself is called `port`
+> * Port on the node that we use to access services is called `nodePort`, its range is [30000, 32767]
+> * To link pods to the service, we copy the required labels of the pods and then paste them in the `selector` section
+> * Services also support session affinity
+> * When pods are distributed along different nodes, services also gets created on all nodes and takes care of all that
+> * Map a port on the node to a port on the pod
+> * The algorithm for loadbalancing is random
+> ```
+> apiVersion: v1
+> kind: Service
+> metadata:
+>   name: SERVICE_NAME
+> spec:
+>   type: NodePort
+>   ports:
+>     - targetPort: TARGET_PORT
+>       port: PORT
+>       nodePort: NODE_PORT
+>   selector:
+>     l1: v1
+>     l2: v2
+> ```
+
+> [!IMPORTANT]
+> ### CLUSTER IP
+> * Groups pods and makes easy to access the pods
+> ```
+> apiVersion: v1
+> kind: Service
+> metadata:
+>   name: SERVICE_NAME
+> spec:
+>   type: ClusterIP
+>   ports:
+>     - targetPort: TARGET_PORT
+>       port: PORT
+>   selector:
+>     l1: v1
+>     l2: v2
+> ```
+
+> [!TIP]
+> `kubernetes` service of `ClusterIP` is the default service and it is always running
+
+> [!IMPORTANT]
+> ### LOAD BALANCER
+> * Balance load between the pods
+> * Use native load balancers from cloud platforms
+> * Use external load balancer
+
+## MICROSERVICES ARCHITECTURE
